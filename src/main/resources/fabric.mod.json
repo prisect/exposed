@@ -1,0 +1,40 @@
+{
+	"schemaVersion": 1,
+	"id": "exposed",
+	"version": "${version}",
+	"name": "Exposed",
+	"description": "Shows server tick time and highlights the block entities and entities that are eating your tick. Multiplayer needs Exposed on both the client and the server.",
+	"authors": [
+		"dima"
+	],
+	"license": "MIT",
+	"icon": "assets/exposed/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"dev.exposed.ExposedCommon"
+		],
+		"client": [
+			"dev.exposed.ExposedClient"
+		],
+		"modmenu": [
+			"dev.exposed.ExposedModMenu"
+		]
+	},
+	"mixins": [
+		"exposed.mixins.json",
+		{
+			"config": "exposed.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.19.5",
+		"minecraft": "~26.3",
+		"java": ">=25",
+		"fabric-api": "*"
+	},
+	"recommends": {
+		"modmenu": ">=21.0.0"
+	}
+}
