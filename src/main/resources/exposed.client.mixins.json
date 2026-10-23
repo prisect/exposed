@@ -3,7 +3,8 @@
 	"package": "dev.exposed.mixin",
 	"compatibilityLevel": "JAVA_25",
 	"client": [
-		"GameRendererMixin"
+		"GameRendererMixin",
+		"MouseHandlerImGuiMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

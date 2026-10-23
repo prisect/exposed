@@ -41,6 +41,53 @@ processResources {
 	}
 }
 
+tasks.register('validateModIcon') {
+	def sourceIconFile = layout.projectDirectory.file('docs/icon.png')
+	def iconFile = layout.projectDirectory.file('src/main/resources/assets/exposed/icon.png')
+	def metadataFile = layout.projectDirectory.file('src/main/resources/fabric.mod.json')
+	inputs.files(sourceIconFile, iconFile, metadataFile)
+
+	doLast {
+		if (!sourceIconFile.asFile.exists()) {
+			throw new GradleException("Missing source Mod Menu icon: ${sourceIconFile.asFile}")
+		}
+		def icon = iconFile.asFile
+		if (!java.util.Arrays.equals(sourceIconFile.asFile.bytes, icon.bytes)) {
+			throw new GradleException("Packaged Mod Menu icon must match docs/icon.png")
+		}
+
+		if (!icon.exists()) {
+			throw new GradleException("Missing Mod Menu icon: ${icon}")
+		}
+
+		def image = javax.imageio.ImageIO.read(icon)
+
+		if (image == null) {
+			throw new GradleException("Mod Menu icon is not a readable PNG: ${icon}")
+		}
+
+		def width = image.width
+		def height = image.height
+		image.flush()
+
+		if (width != height) {
+			throw new GradleException("Mod Menu icon must be square, got ${width}x${height}")
+		}
+
+		if (width < 64) {
+			throw new GradleException("Mod Menu icon must be at least 64x64, got ${width}x${height}")
+		}
+
+		if (!metadataFile.asFile.text.contains('"icon": "assets/exposed/icon.png"')) {
+			throw new GradleException("fabric.mod.json does not point at assets/exposed/icon.png")
+		}
+
+		logger.lifecycle("Mod Menu icon OK: ${width}x${height}, ${icon.length()} bytes")
+	}
+}
+
+processResources.dependsOn tasks.named('validateModIcon')
+
 tasks.withType(JavaCompile).configureEach {
 	it.options.release = 25
 }

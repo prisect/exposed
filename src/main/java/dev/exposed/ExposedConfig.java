@@ -18,13 +18,20 @@ public final class ExposedConfig {
 
 	private static ExposedConfig instance = new ExposedConfig();
 
+	public static final double MIN_UI_SCALE = 0.6;
+	public static final double MAX_UI_SCALE = 1.6;
+
 	public int distanceChunks = 4;
-	public int hudRows = 4;
 	public double redMillis = 1.0;
+	public double uiScale = 0.8;
 	public boolean onlyVisible = true;
 	public boolean showLabels = true;
 	public boolean showBoxes = true;
-	public boolean showHud = true;
+	public boolean miniPanelCollapsed = true;
+	public float miniPanelX = -1.0F;
+	public float miniPanelY = -1.0F;
+	public float miniPanelWidth = 240.0F;
+	public float miniPanelHeight = 150.0F;
 
 	private ExposedConfig() {
 	}
@@ -70,17 +77,21 @@ public final class ExposedConfig {
 		return this.distanceChunks * 16.0;
 	}
 
-	public int hudRows() {
-		return Math.max(1, Math.min(12, this.hudRows));
-	}
-
 	public double redMillis() {
 		return Math.max(0.05, this.redMillis);
 	}
 
+	public double uiScale() {
+		return Math.max(MIN_UI_SCALE, Math.min(MAX_UI_SCALE, this.uiScale));
+	}
+
 	private void clamp() {
 		this.distanceChunks = Math.max(1, Math.min(32, this.distanceChunks));
-		this.hudRows = Math.max(1, Math.min(12, this.hudRows));
 		this.redMillis = Math.max(0.05, Math.min(100.0, this.redMillis));
+		this.uiScale = this.uiScale();
+		this.miniPanelWidth = Math.max(180.0F, Math.min(1000.0F, this.miniPanelWidth));
+		this.miniPanelHeight = Math.max(80.0F, Math.min(900.0F, this.miniPanelHeight));
+		this.miniPanelX = Math.max(-1.0F, this.miniPanelX);
+		this.miniPanelY = Math.max(-1.0F, this.miniPanelY);
 	}
 }

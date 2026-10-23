@@ -3,10 +3,13 @@
 	"id": "exposed",
 	"version": "${version}",
 	"name": "Exposed",
-	"description": "Shows server tick time and highlights the block entities and entities that are eating your tick. Multiplayer needs Exposed on both the client and the server.",
+	"description": "Shows what's lagging your server, and where. Measures integrated-server tick time and TPS, ranks the block entities and entities that cost the most.",
 	"authors": [
-		"dima"
+		"dotdima"
 	],
+	"contact": {
+		"homepage": "https://modrinth.com/mod/exposed"
+	},
 	"license": "MIT",
 	"icon": "assets/exposed/icon.png",
 	"environment": "*",

@@ -10,7 +10,7 @@ Needs JDK 26. Compiles to Java 25.
 .\gradlew.bat build
 ```
 
-Jar: `build/libs/exposed-0.2.0.jar`
+Jar: `build/libs/exposed-1.0.jar`
 
 ```
 .\gradlew.bat runClient

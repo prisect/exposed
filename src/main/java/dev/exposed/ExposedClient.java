@@ -46,6 +46,14 @@ public final class ExposedClient implements ClientModInitializer {
 		ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> RemoteFeed.clear());
 
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
+			// Do not let typing the profiler hotkey into chat or a menu toggle capture.
+			if (client.gui.screen() != null) {
+				while (toggleKey.consumeClick()) {
+					// Discard the queued key press while a screen owns keyboard input.
+				}
+				return;
+			}
+
 			while (toggleKey.consumeClick()) {
 				Profiler.toggle();
 				RemoteFeed.clear();
